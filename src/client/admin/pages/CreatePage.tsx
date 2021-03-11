@@ -11,7 +11,6 @@ import CustomForm from "../components/form/CustomForm";
 import ResultMessageBox from "../components/form/ResultMessageBox";
 import ApiRequest from "../libraries/ApiRequest";
 import { showServerResult } from '../store/result/actions';
-
 class CreateFormFooter extends React.Component {
   render() {
     const submitStyle: React.CSSProperties = {
@@ -23,7 +22,7 @@ class CreateFormFooter extends React.Component {
         {/** TODO add the functionality, it has no effect for now */}
         <FormControlLabel value="continue" control={<Checkbox color="primary" checked={false} />} label="Oluşturmaya Devam Et" labelPlacement="start" />
         <Button type="submit" style={submitStyle} variant="contained" color="primary"        >
-          {trans("resource.add", { item: "Ürün" }) /** TODO localization */}
+          {trans("resource.add", { item: "Program" }) /** TODO localization */}
         </Button>
       </>
     );

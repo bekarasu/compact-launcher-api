@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import HttpException from "../../../../exceptions/api/http-exception";
 import "../../../../libraries/ApiResponse";
 import ModelService from "../../../../services/ModelService.service";
-import { Product } from './../../../../models/product.model';
+import { Program } from './../../../../models/program.model';
 
-class ProductController {
+class ProgramController {
   private service: ModelService;
   constructor() {
-    this.service = new ModelService(Product);
+    this.service = new ModelService(Program);
   }
   list = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -19,7 +19,7 @@ class ProductController {
         status: true
       };
       const data = await this.service.findAll(where, {}, limit, offset);
-      res.setMessage("Products Fetched").customResponse(data);
+      res.setMessage("Program Fetched").customResponse(data);
     } catch (e) {
       next(e);
     }
@@ -31,15 +31,15 @@ class ProductController {
         slug: req.params.slug
       };
 
-      const product = await this.service.find(where);
-      if (product === null) {
-        throw new HttpException(400, "Product Not Found");
+      const program = await this.service.find(where);
+      if (program === null) {
+        throw new HttpException(400, "Program Not Found");
       }
 
-      res.setMessage("Product Fetched").customResponse(product);
+      res.setMessage("Product Fetched").customResponse(program);
     } catch (e) {
       next(e);
     }
   };
 }
-export default new ProductController();
+export default new ProgramController();

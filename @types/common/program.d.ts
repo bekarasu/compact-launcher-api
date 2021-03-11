@@ -1,10 +1,9 @@
-export interface IProductImage {
+export interface IProgramImage {
   path: string;
 }
 
 // useful for client side
-export interface IProduct {
-  _id?: string;
+export interface IProgram {
   name: string;
   sku: string;
   slug: string;
@@ -13,7 +12,7 @@ export interface IProduct {
   status: boolean;
   brand?: number;
   discount?: number;
-  images: Array<IProductImage>;
+  images: Array<IProgramImage>;
   createdAt: Date,
   updatedAt: Date,
   deletedAt: Date | null

@@ -39,7 +39,7 @@ export const localeTR: Language = {
     status: "Durum",
   },
   models: {
-    product: "Ürün",
+    program: "Program",
     logs: "Kayıt",
     app: "Uygulama"
   }

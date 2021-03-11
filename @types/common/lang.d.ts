@@ -36,7 +36,7 @@ export interface Language {
     status: string;
   };
   models?: {
-    product: string
+    program: string
     logs: string
     app:string
   }

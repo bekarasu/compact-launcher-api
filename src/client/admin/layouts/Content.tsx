@@ -17,7 +17,7 @@ class Content extends React.Component<IReduxUserProps> {
     return (
       <>
         <Row style={styles}>
-          <ResourceRoute link="products" />
+          <ResourceRoute link="programs" />
           <ResourceRoute link="logs" />
           <Switch>
             <Route path="/dashboard" component={Dashboard} />

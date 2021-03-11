@@ -3,5 +3,6 @@
         "node_modules/": true,
         ".vscode": true,
         "**/._*": true
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

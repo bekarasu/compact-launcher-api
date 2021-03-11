@@ -1,8 +1,19 @@
 import * as React from "react";
-import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-class HomePage extends React.Component {
+import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
+import { Store } from "redux";
+import { IProgram } from "../../../../@types/common/program";
+import { trans } from "../../../common/resources/lang/translate";
+import { fetchPrograms } from "../store/programs/actions";
+import { store } from "../store";
+
+class HomePage extends React.Component<RouteComponentProps<RouteParams> & IProgramsProps> {
+  componentDidMount() {
+    if (this.props.programs == null) {
+      loadData(store);
+    }
+  }
   render() {
     return (
       <>
@@ -10,20 +21,36 @@ class HomePage extends React.Component {
           <title>Anasayfa</title>
           <meta property="og:title" content="Anasayfa" />
         </Helmet>
-        <Row>
-          <Col>Anasayfaya Hoşgeldiniz</Col>
-        </Row>
-        <Row>
-          <Col>
-            <Link to="/urunler">Ürünler Sayfası</Link>
-          </Col>
-          <Col>
-            <Link to="/hakkimizda">Hakkımızda Sayfası</Link>
-          </Col>
-        </Row>
+        {this.props.programs != null && this.props.programs.total > 0 ? (
+          this.props.programs.items.map((program: IProgram, key: number) => (
+            <p key={key}>{program.name}</p>
+          ))
+        ) : (
+          <p>{trans("general.not_found", { item: "Program" })}</p>
+        )}
       </>
     );
   }
 }
 
-export default HomePage;
+interface RouteParams {
+  slug: string;
+}
+interface IProgramsProps {
+  programs?: { items: Array<IProgram>, total: number };
+}
+
+const mapStateToProps = (state: any) => {
+  return {
+    programs: state.programs.programs,
+  };
+};
+
+async function loadData(store: Store) {
+  return store.dispatch(await fetchPrograms());
+}
+
+export default {
+  loadData,
+  component: connect(mapStateToProps)(HomePage),
+};

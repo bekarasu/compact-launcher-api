@@ -10,7 +10,7 @@ import AdminMenuController from "../../http/controllers/admin/api/AdminMenuContr
 import AuthController from "../../http/controllers/admin/api/AuthController";
 import FileController from "../../http/controllers/admin/api/FileController";
 import LogController from "../../http/controllers/admin/api/LogController";
-import ProductController from "../../http/controllers/admin/api/ProductController";
+import ProgramController from "../../http/controllers/admin/api/ProgramController";
 import { Auth } from "../../http/middlewares/api/admin_auth.middleware";
 import { errorHandler } from "../../http/middlewares/api/error.middleware";
 import { notFoundHandler } from "../../http/middlewares/api/notFound.middleware";
@@ -61,16 +61,16 @@ adminApiRouter.use(Auth); // admin authorize is required after that line
 
 adminApiRouter.route('/uploadFile').post(upload.any(), FileController.uploadFile);
 
-adminApiRouter.route("/products/list").get(ProductController.all);
-adminApiRouter.route("/products/create").get(ProductController.create);
-adminApiRouter.route("/products/:id/edit").get(ProductController.edit);
-adminApiRouter.route("/products/:id")
-  .get(ProductController.show)
-  .put(upload.any(), ProductController.validate("update"), ProductController.update)
-  .delete(ProductController.delete);
-adminApiRouter.route("/products")
-  .get(ProductController.list)
-  .post(upload.any(), ProductController.validate("create"), ProductController.insert);
+adminApiRouter.route("/programs/list").get(ProgramController.all);
+adminApiRouter.route("/programs/create").get(ProgramController.create);
+adminApiRouter.route("/programs/:id/edit").get(ProgramController.edit);
+adminApiRouter.route("/programs/:id")
+  .get(ProgramController.show)
+  .put(upload.any(), ProgramController.validate("update"), ProgramController.update)
+  .delete(ProgramController.delete);
+adminApiRouter.route("/programs")
+  .get(ProgramController.list)
+  .post(upload.any(), ProgramController.validate("create"), ProgramController.insert);
 
 adminApiRouter.route("/logs").get(LogController.list);
 adminApiRouter.route("/logs/list").get(LogController.all);

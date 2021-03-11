@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IFormProperties, IGridProperties } from "../../../../../../@types/server/admin/resource";
 import HttpException from "../../../../exceptions/api/http-exception";
-import { toURLConverter } from "../../../../helpers/route";
+import { toURLConverter } from "../../../../helpers/routeServer";
 import ModelService from "../../../../services/ModelService.service";
 
 abstract class ResourceController {

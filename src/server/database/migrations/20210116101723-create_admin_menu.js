@@ -1,7 +1,7 @@
 module.exports = {
   async up(db, client) {
     const menu = [{
-        id: 1,
+        ID: 1,
         name: "dashboard",
         label: {
           key: "panel.dashboard",
@@ -10,19 +10,19 @@ module.exports = {
         parentID: 0
       },
       {
-        id: 2,
-        name: "product_management",
+        ID: 2,
+        name: "program_management",
         label: {
           key: "resource.management",
           params: {
-            item: 'models.product'
+            item: 'models.program'
           }
         },
-        url: "/products/list",
+        url: "/programs/list",
         parentID: 0
       },
       {
-        id: 3,
+        ID: 3,
         name: "app_management",
         label: {
           key: "resource.management",
@@ -33,7 +33,7 @@ module.exports = {
         parentID: 0
       },
       {
-        id: 4,
+        ID: 4,
         name: "logs",
         label: {
           key: "panel.logs",

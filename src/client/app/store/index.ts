@@ -1,8 +1,8 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
-import productsReducer from "./products/reducer";
 import thunk from "redux-thunk";
+import programReducer from "./programs/reducer";
 const rootReducer = combineReducers({
-  products: productsReducer, // TODO it will remove on lite version
+  programs: programReducer,
 });
 
 declare global {

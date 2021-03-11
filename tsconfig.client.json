@@ -1,17 +1,15 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./public/js/",
     "module": "es6",
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "target": "es5",
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true,
     "lib": ["es2015", "dom"],
     "typeRoots": ["./@types/client/**/*"],
     "types": ["@types/node"]
   },
-  "exclude": ["node_modules"]
 }

@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
-import { LogModel } from "../../../@types/server/models";
+import { ILog } from "../../../@types/common/log";
+export interface LogModel extends ILog, mongoose.Document { }
 
 const LogsSchema: mongoose.Schema = new mongoose.Schema(
     {
@@ -35,13 +36,11 @@ const LogsSchema: mongoose.Schema = new mongoose.Schema(
     },
     { timestamps: true },
 );
-LogsSchema.pre<LogModel>("save", function (next) {
+LogsSchema.pre<LogModel>("save", function () {
     this.createdAt = new Date();
-    next();
 });
-LogsSchema.pre<LogModel>("update", function (next) {
+LogsSchema.pre<LogModel>("updateOne", function () {
     this.updatedAt = new Date();
-    next();
 });
 // TODO add the deleted_at support generally
 export const Log = mongoose.model<LogModel>("Log", LogsSchema);

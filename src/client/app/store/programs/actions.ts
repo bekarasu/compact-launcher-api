@@ -1,19 +1,19 @@
 import axios, { AxiosError } from "axios";
 import { appApiURL } from "../../../resources/strings/apiURL";
-import { FETCH_PRODUCT, FETCH_PRODUCTS } from "./types";
+import { FETCH_PROGRAM, FETCH_PROGRAMS } from "./types";
 
-export async function fetchProducts() {
-  const res = await axios.get(appApiURL + "products");
+export async function fetchPrograms() {
+  const res = await axios.get(appApiURL + "programs");
   return {
-    type: FETCH_PRODUCTS,
+    type: FETCH_PROGRAMS,
     payload: res.data.data,
   };
 }
 
-export async function fetchProduct(name: string) {
-  return await axios.get(appApiURL + "products/" + name).then(res => {
+export async function fetchProgram(name: string) {
+  return await axios.get(appApiURL + "programs/" + name).then(res => {
     return {
-      type: FETCH_PRODUCT,
+      type: FETCH_PROGRAM,
       payload: res.data.data,
     };
   }).catch((err: AxiosError) => {
@@ -21,12 +21,9 @@ export async function fetchProduct(name: string) {
     } else {
       // TODO log the error
     }
-
     return {
-      type: FETCH_PRODUCT,
+      type: FETCH_PROGRAM,
       payload: {}
     };
   });
-
-
 }

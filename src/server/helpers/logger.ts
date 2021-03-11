@@ -1,4 +1,4 @@
-import { ILog } from "../../../@types/server/models";
+import { ILog } from "../../../@types/common/log";
 import { Log } from "../models/logs.model";
 import ModelService from "../services/ModelService.service";
 

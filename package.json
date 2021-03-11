@@ -1,9 +1,9 @@
 {
-  "name": "mernt-starter-kit",
+  "name": "compact-launcher-api",
   "author": "Burak Eren Karasu",
   "license": "MIT",
-  "version": "0.0.4",
-  "description": "This is the starter kit for my projects",
+  "version": "0.1.0",
+  "description": "An API Service For Compact Launcher",
   "main": "dist/server.js",
   "keywords": [
     "starter",

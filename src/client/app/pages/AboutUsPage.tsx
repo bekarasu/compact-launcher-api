@@ -6,11 +6,11 @@ class AboutUsPage extends React.Component {
     return (
       <>
         <Helmet>
-          <title>Hakkımızda</title>
-          <meta property="og:title" content="Hakkımızda" />
+          <title>About Us</title>
+          <meta property="og:title" content="About Us" />
         </Helmet>
         <Row>
-          <strong>İçerik Tabanlı MERN + Typescript Başlangıç Kiti</strong>
+          <strong>An API For Compact Launcher Program</strong>
         </Row>
         <Row>
           <a href="https://github.com/bkarasu95" target="_blank">

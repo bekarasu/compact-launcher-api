@@ -1,23 +1,23 @@
 import { Request } from "express";
 import { body } from "express-validator";
-import { IProductImage } from "../../../../../../@types/common/product";
 import { IFormProperties, IGridProperties } from "../../../../../../@types/server/admin/resource";
 import { fileSystem } from "../../../../config/filesystem";
 import HttpException from "../../../../exceptions/api/http-exception";
-import { toURLConverter } from "../../../../helpers/route";
 import "../../../../libraries/ApiResponse";
-import { Product } from "../../../../models/product.model";
 import ModelService from "../../../../services/ModelService.service";
 import ResourceController from "./ResourceController";
+import { Program } from '../../../../models/program.model';
+import { IProgramImage } from "../../../../../../@types/common/program";
+import { toURLConverter } from "../../../../helpers/routeServer";
 
-class ProductController extends ResourceController {
+class ProgramController extends ResourceController {
 
   protected service: ModelService;
-  protected title = "Ürünler"; // TODO localization support
-  protected serviceURL = "products"; // TODO localization support
+  protected title = "Programlar"; // TODO localization support
+  protected serviceURL = "programs";
   constructor() {
     super();
-    this.service = new ModelService(Product);
+    this.service = new ModelService(Program);
   }
   grid(): IGridProperties {
     return {
@@ -41,7 +41,6 @@ class ProductController extends ResourceController {
         {
           name: "name",
           type: "text",
-          // initialValue: process.env.NODE_ENV === "production" ? null : faker.commerce.productName() // for filling inputs automatically, it gives us fastly testing, disable it in prd
         },
         {
           name: "slug",
@@ -50,22 +49,18 @@ class ProductController extends ResourceController {
         {
           name: "price",
           type: "number",
-          // initialValue: process.env.NODE_ENV === "production" ? null : faker.commerce.price() // for filling inputs automatically, it gives us fastly testing, disable it in prd
         },
         {
           name: "sku",
           type: "text",
-          // initialValue: process.env.NODE_ENV === "production" ? null : faker.lorem.word() // for filling inputs automatically, it gives us fastly testing, disable it in prd
         },
         {
           name: "status",
           type: "switch",
-          // initialValue: Date.now() % 2 == 1 // for filling inputs automatically, it gives us fastly testing, disable it in prd
         },
         {
           name: "content",
           type: "wysiwyg",
-          // initialValue: process.env.NODE_ENV === "production" ? null : faker.commerce.productDescription() // for filling inputs automatically, it gives us fastly testing, disable it in prd
         },
         {
           name: "images",
@@ -78,17 +73,17 @@ class ProductController extends ResourceController {
     throw new Error("Method not implemented.");
   }
 
-  processImages(req: Request): Array<IProductImage> {
+  processImages(req: Request): Array<IProgramImage> {
     if (typeof req.files != "undefined") {
       // image processing
       let fileValues = Object.values(req.files);
-      let images: Array<IProductImage> = [];
+      let images: Array<IProgramImage> = [];
       fileValues.forEach((file: Express.Multer.File): void => {
         if (typeof images != "undefined") {
-          const productImage: IProductImage = {
+          const programImage: IProgramImage = {
             path: file.path.replace(fileSystem.uploadPath, fileSystem.assetUrl), // replace the path because of we use this url later, we don't have to keep upload path
           };
-          images.push(productImage);
+          images.push(programImage);
         }
       });
       return images;
@@ -144,9 +139,9 @@ class ProductController extends ResourceController {
     rules.push(
       body("name")
         .isLength({ min: 5 })
-        .withMessage("Product Name must be at least 5 character long")
+        .withMessage("Program Name must be at least 5 character long")
     );
     return rules;
   };
 }
-export default new ProductController();
+export default new ProgramController();

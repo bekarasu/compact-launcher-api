@@ -15,11 +15,9 @@ appWebRouter.use(cors());
 
 // all pages redirects to react
 appWebRouter.get("*", async (req: Request, res: Response) => {
-  const promises = matchRoutes(Routes, req.originalUrl).map(
-    ({ route, match }) => {
-      return route.loadData ? route.loadData(store, match.params) : null; // get the component's load data function and execute it
-    }
-  );
+  const promises = matchRoutes(Routes, req.originalUrl).map(({ route, match }) => {
+    return route.loadData ? route.loadData(store, match.params) : null; // get the component's load data function and execute it
+  });
   Promise.all(promises).then(() => {
     res.send(renderer(req.originalUrl, store)); // originalUrl can get the path, req.path doesnt work for inner routes.
   });

@@ -1,25 +1,19 @@
 import AboutUsPage from "../../client/app/pages/AboutUsPage";
 import HomePage from "../../client/app/pages/HomePage";
-import ProductPage from "../../client/app/pages/ProductPage";
-import ProductsPage from "../../client/app/pages/ProductsPage";
+import ProgramPage from "../../client/app/pages/ProgramPage";
 export default [
   {
+    ...HomePage,
     path: "/",
-    component: HomePage,
-    exact: true,
+    exact: true
   },
   {
-    path: "/hakkimizda",
     component: AboutUsPage,
-    exact: true,
+    path: "/about-us",
+    exact: true
   },
   {
-    ...ProductPage,
-    path: "/urunler/:slug",
-  },
-  {
-    ...ProductsPage,
-    path: "/urunler",
-    exact: true,
-  },
+    ...ProgramPage,
+    path: "/programs/:slug",
+  }
 ];

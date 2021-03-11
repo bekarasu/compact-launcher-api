@@ -1,4 +1,4 @@
-import { DocumentQuery, Model } from "mongoose";
+import { CallbackError, Model, NativeError, Query } from "mongoose";
 import HttpException from "../exceptions/api/http-exception";
 
 class ModelService {
@@ -14,9 +14,9 @@ class ModelService {
      * @param limit - data count limiting
      * @param offset - start point to taking data
      */
-    findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): DocumentQuery<any[], any, {}> => {
+    findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): Query<any[], any, {}> => {
         where['deletedAt'] = { $eq: null };
-        let data = this.model.find(where, select, (error: Error) => {
+        let data = this.model.find(where, select, null, (error: Error) => {
             if (error) {
                 throw new HttpException(500, error.message);
             }
@@ -31,9 +31,9 @@ class ModelService {
      * @param where 
      * @param select 
      */
-    find = (where?: any, select?: any): DocumentQuery<any, any, {}> => {
+    find = (where?: any, select?: any): Query<any, any, {}> => {
         where['deletedAt'] = { $eq: null };
-        const item = this.model.findOne(where, select, (error: Error) => {
+        const item = this.model.findOne(where, select, null, (error: CallbackError, doc: any) => {
             if (error) {
                 throw new HttpException(500, error.message);
             }

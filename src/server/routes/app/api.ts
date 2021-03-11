@@ -3,11 +3,11 @@ import cors from 'cors';
 import * as dotenv from "dotenv";
 import express from "express";
 import helmet from 'helmet';
-import ProductController from "../../http/controllers/app/api/ProductController";
 import { errorHandler } from '../../http/middlewares/api/error.middleware';
 import { notFoundHandler } from '../../http/middlewares/api/notFound.middleware';
 import "../../libraries/ApiResponse";
 import { Restful } from '../../http/middlewares/api/restful.middleware';
+import ProgramController from "../../http/controllers/admin/api/ProgramController";
 dotenv.config();
 
 
@@ -29,8 +29,8 @@ appApiRouter.use(bodyParser.json());
 /**
  * Routes
  */
-appApiRouter.get('/products', ProductController.list);
-appApiRouter.get('/products/:slug', ProductController.show);
+appApiRouter.get('/programs', ProgramController.list);
+appApiRouter.get('/programs/:slug', ProgramController.show);
 
 /**
  * After Middleware

@@ -36,3 +36,9 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 server.listen(PORT);
 if (process.env.NODE_ENV === "development")
   console.log("listening " + process.env.URL + ":" + PORT);
+
+process.on('unhandledRejection', (reason, p) => {
+  if (process.env.NODE_ENV === "development") {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  }
+});
