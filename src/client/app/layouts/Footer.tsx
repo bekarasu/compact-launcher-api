@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
       <footer className="z-999">
         <Container>
           <Row>
-            <p>Copyright 2020 © bekarasu.com Tüm hakları saklıdır</p>
+            <p>Copyright 2020 © bekarasu.com All rights reserved</p>
           </Row>
         </Container>
       </footer>

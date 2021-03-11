@@ -47,6 +47,6 @@ export type LanguageGroup = {
   [key: string]: Language;
 };
 
-export type LanguageParams = {
+export type TranslateParams = {
   [key: string]: string;
 };

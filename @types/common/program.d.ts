@@ -1,19 +1,11 @@
 export interface IProgramImage {
-  path: string;
+  path: string
 }
-
-// useful for client side
 export interface IProgram {
-  name: string;
-  sku: string;
-  slug: string;
-  price: number;
-  content: string;
-  status: boolean;
-  brand?: number;
-  discount?: number;
-  images: Array<IProgramImage>;
-  createdAt: Date,
-  updatedAt: Date,
+  name: string
+  slug: string
+  content: string
+  status: boolean
+  images: Array<IProgramImage>
   deletedAt: Date | null
 }

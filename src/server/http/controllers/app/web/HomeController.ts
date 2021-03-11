@@ -12,6 +12,7 @@ class HomeController {
     fs.readFile(indexFile, "utf8", (err, data) => {
       if (err) {
         console.error("Something went wrong:", err);
+        // TODO change response
         return res.status(500).send("Oops, better luck next time!");
       }
       return res.send(data.replace('<div id="app"></div>', `<div id="app">${app}</div>`));

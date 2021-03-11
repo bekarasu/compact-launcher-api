@@ -1,7 +1,7 @@
 import app from "../../config/app.json";
 import { localeTR } from "./tr";
 import { localeEN } from "./en";
-import { LanguageGroup, LanguageParams } from "../../../../@types/common/lang";
+import { LanguageGroup, TranslateParams } from "../../../../@types/common/lang";
 
 // define your valid languages in there
 let locale: LanguageGroup = {
@@ -10,7 +10,7 @@ let locale: LanguageGroup = {
 };
 
 // translate the text with variable, it is useful when dynamic parameters required
-export const trans = (key: string, params?: LanguageParams, lang?: string): string => {
+export const trans = (key: string, params?: TranslateParams, lang?: string): string => {
   if (lang == null) lang = app.lang; // if lang is not set, get the default lang in config
   let text: string = index(locale[lang], key);
   if (text == null || text === "") return key; 

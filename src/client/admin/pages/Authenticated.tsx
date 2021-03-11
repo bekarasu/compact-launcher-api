@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { RouteConfigComponentProps } from "react-router-config";
 import { withRouter } from "react-router-dom";
 import { store } from "..";
+import { APP_NAME } from "../../resources/strings/app";
 import Content from "../layouts/Content";
 import Footer from "../layouts/Footer";
 import Navbar from "../layouts/Navbar";
@@ -39,6 +40,7 @@ class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAut
           <Grid item md={10} className="min-vh-100 main-container">
             <Navbar style={navbarStyle} />
             <Grid container item direction="column">
+              <p>{APP_NAME}</p>
               <Content />
             </Grid>
             <Footer />

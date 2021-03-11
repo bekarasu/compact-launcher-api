@@ -6,6 +6,8 @@ import { Store } from "redux";
 import serialize from "serialize-javascript";
 import { Provider } from "react-redux";
 import { Helmet } from "react-helmet";
+import "./string";
+
 export default (url: string, store: Store): string => {
   const app = renderToString(
     <Provider store={store}>
@@ -31,6 +33,6 @@ export default (url: string, store: Store): string => {
             <script src="/app.js"></script>
         </body>
     </html>
-  `;
+  `.replace(/\r?\n|\r|\n/g,'').replaceAll("  ", "");  
   return html;
 };

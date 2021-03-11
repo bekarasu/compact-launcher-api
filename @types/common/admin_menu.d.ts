@@ -1,4 +1,4 @@
-import { LanguageParams } from "./lang";
+import { TranslateParams } from "./lang";
 
 export interface IAdminMenu {
   ID: string,
@@ -11,5 +11,5 @@ export interface IAdminMenu {
 
 export interface IAdminMenuLabel {
   key: string,
-  params: LanguageParams
+  params: TranslateParams
 }
