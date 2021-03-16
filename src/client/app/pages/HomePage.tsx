@@ -23,7 +23,7 @@ class HomePage extends React.Component<RouteComponentProps<RouteParams> & IProgr
         </Helmet>
         {this.props.programs != null && this.props.programs.total > 0 ? (
           this.props.programs.items.map((program: IProgram, key: number) => (
-            <p key={key}>{program.name}</p>
+            <p key={key}>{program.slug}</p>
           ))
         ) : (
           <p>{trans("general.not_found", { item: "Program" })}</p>

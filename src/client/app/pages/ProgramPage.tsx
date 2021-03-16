@@ -26,14 +26,14 @@ class ProgramPage extends React.Component<RouteComponentProps<RouteParams> & IPr
     }
     if (typeof this.props.program != 'undefined') {
       if (typeof this.props.program.images != 'undefined') {
-        this.props.program.images.map((image: IProgramImage) => {
-          images.push({
-            original: image.path,
-            thumbnail: image.path,
-            originalAlt: this.props.program.name,
-            thumbnailAlt: this.props.program.name,
-          })
-        })
+        // this.props.program.images.map((image: IProgramImage) => {
+        // images.push({
+        // original: image.path,
+        // thumbnail: image.path,
+        // originalAlt: this.props.program.slug,
+        // thumbnailAlt: this.props.program.slug,
+        // })
+        // })
       }
     }
     return (
@@ -43,14 +43,14 @@ class ProgramPage extends React.Component<RouteComponentProps<RouteParams> & IPr
         ) : (
           <>
             <Helmet>
-              <title>{this.props.program.name}</title>
+              <title>{this.props.program.slug}</title>
               <meta property="og:title" content="Programs" />
               {images.length > 0 ? <meta property="og:image" content={images[0].original} /> : null}
             </Helmet>
             <Row style={style}>
               <Col md="6">{images.length > 0 ? <>{/* TODO  */}</> : null}</Col>
               <Col md="6">
-                <p>{this.props.program.name}</p>
+                <p>{this.props.program.slug}</p>
               </Col>
             </Row>
             <Row className="content ck-content ck">
@@ -66,7 +66,7 @@ interface RouteParams {
   slug: string
 }
 export interface IProgramProps {
-  program?: IProgram
+  program: IProgram
 }
 const mapStateToProps = (state: any) => {
   return {

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 import { NextFunction, Request, Response } from "express";
 import jwt, { Secret, VerifyErrors } from "jsonwebtoken";
-import HttpException from "../../../../exceptions/api/http-exception";
+import HttpException from "../../../../exceptions/api/HTTPException";
 import { IPanelUser } from './../../../../../../@types/client/admin/user.d';
 import { AdminUser } from './../../../../models/admin_user.model';
 import ModelService from './../../../../services/ModelService.service';

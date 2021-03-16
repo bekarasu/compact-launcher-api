@@ -1,46 +1,50 @@
-import * as mongoose from "mongoose";
-import { ILog } from "../../../@types/common/log";
-export interface LogModel extends ILog, mongoose.Document { }
+import * as mongoose from 'mongoose'
+import { ILog } from '../../../@types/common/log'
+export interface LogModel extends ILog, mongoose.Document {
+  _id: string
+}
 
 const LogsSchema: mongoose.Schema = new mongoose.Schema(
-    {
-        type: {
-            type: String,
-            required: true,
-            enum: ['rest', 'cli'],
-        },
-        endpoint: {
-            type: String,
-            required: true,
-        },
-        log: {
-            type: Object,
-            required: true,
-        },
-        message: {
-            type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            enum: ["error", "warning", "success"],
-            required: true
-        },
-        statusCode: {
-            type: Number
-        },
-        deletedAt: {
-            type: Date,
-            default: null
-        }
+  {
+    type: {
+      type: String,
+      required: true,
+      enum: ['rest', 'cli'],
     },
-    { timestamps: true },
-);
-LogsSchema.pre<LogModel>("save", function () {
-    this.createdAt = new Date();
-});
-LogsSchema.pre<LogModel>("updateOne", function () {
-    this.updatedAt = new Date();
-});
+    endpoint: {
+      type: String,
+      required: true,
+    },
+    log: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['error', 'warning', 'success'],
+      required: true,
+    },
+    statusCode: {
+      type: Number,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+  },
+  { timestamps: true },
+)
+LogsSchema.pre<LogModel>('save', function (next) {
+  this.createdAt = new Date()
+  next()
+})
+LogsSchema.pre<LogModel>('updateOne', function (next) {
+  this.updatedAt = new Date()
+  next()
+})
 // TODO add the deleted_at support generally
-export const Log = mongoose.model<LogModel>("Log", LogsSchema);
+export const Log = mongoose.model<LogModel>('Log', LogsSchema)

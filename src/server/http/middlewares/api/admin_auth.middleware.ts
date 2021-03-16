@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { VerifyErrors } from "jsonwebtoken";
-import HttpException from "../../../exceptions/api/http-exception";
+import HttpException from "../../../exceptions/api/HTTPException";
 import * as dotenv from "dotenv";
 dotenv.config();
 

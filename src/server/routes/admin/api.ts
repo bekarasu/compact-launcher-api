@@ -5,7 +5,7 @@ import helmet from "helmet";
 import multer from "multer";
 import path from "path";
 import { fileSystem } from "../../config/filesystem";
-import HttpException from "../../exceptions/api/http-exception";
+import HttpException from "../../exceptions/api/HTTPException";
 import AdminMenuController from "../../http/controllers/admin/api/AdminMenuController";
 import AuthController from "../../http/controllers/admin/api/AuthController";
 import FileController from "../../http/controllers/admin/api/FileController";

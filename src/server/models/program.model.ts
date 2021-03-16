@@ -1,13 +1,11 @@
 import * as mongoose from 'mongoose'
 import { IProgram } from '../../../@types/common/program'
-export interface ProgramModel extends IProgram, mongoose.Document {}
+export interface ProgramModel extends IProgram, mongoose.Document {
+  _id: string
+}
+const ProgramImageSchema = new mongoose.Schema({ path: String })
 
 const ProgramSchema: mongoose.Schema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   slug: {
     type: String,
     required: true,
@@ -22,13 +20,10 @@ const ProgramSchema: mongoose.Schema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  images: [
-    {
-      path: {
-        type: String,
-      },
-    },
-  ],
+  images: {
+    type: Map,
+    of: [ProgramImageSchema],
+  },
   deletedAt: {
     type: Date,
     default: null,

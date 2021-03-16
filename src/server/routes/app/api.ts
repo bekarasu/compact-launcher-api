@@ -3,11 +3,12 @@ import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
 import helmet from 'helmet'
+import ProgramController from '../../http/controllers/app/api/ProgramController'
 import { errorHandler } from '../../http/middlewares/api/error.middleware'
 import { notFoundHandler } from '../../http/middlewares/api/notFound.middleware'
-import '../../libraries/ApiResponse'
 import { Restful } from '../../http/middlewares/api/restful.middleware'
-import ProgramController from '../../http/controllers/app/api/ProgramController'
+import SelectProgramRequest from '../../http/requests/SelectProgramRequest'
+import '../../libraries/ApiResponse'
 dotenv.config()
 
 /**
@@ -21,12 +22,13 @@ export const appApiRouter = express.Router()
 appApiRouter.use(Restful)
 appApiRouter.use(helmet())
 appApiRouter.use(cors())
-appApiRouter.use(bodyParser.json())
+appApiRouter.use(express.json())
 
 /**
  * Routes
  */
 appApiRouter.get('/programs', ProgramController.list)
+appApiRouter.post('/programs/select', SelectProgramRequest.validate(), ProgramController.selectProgram)
 appApiRouter.get('/programs/:slug', ProgramController.show)
 
 /**

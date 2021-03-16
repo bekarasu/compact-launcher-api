@@ -76,7 +76,6 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState>{
     });
   }
   render() {
-
     return (
       <>
         {typeof this.props.filterFields !== "undefined" && this.props.filterFields.length !== 0 && (<Filter items={this.props.filterFields} />)}

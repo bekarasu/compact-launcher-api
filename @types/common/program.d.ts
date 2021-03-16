@@ -1,11 +1,14 @@
 export interface IProgramImage {
   path: string
 }
+
+export interface IProgramImages {
+  [key: string]: Array<IProgramImage>
+}
 export interface IProgram {
-  name: string
   slug: string
   content: string
   status: boolean
-  images: Array<IProgramImage>
-  deletedAt: Date | null
+  images: IProgramImages
+  deletedAt?: Date | null
 }
