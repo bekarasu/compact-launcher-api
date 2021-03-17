@@ -28,7 +28,7 @@ class ProgramController {
     const where = {
       // status: true,
       slug: req.params.slug,
-    }
+    }    
     if (!(await this.service.isExists('slug', req.params.slug))) {
       const newProgram: IProgram = {
         slug: toURLConverter(req.params.slug),
@@ -41,7 +41,7 @@ class ProgramController {
     let program = await this.service.find(where)
     const resolation: string = typeof req.query.resolation !== 'undefined' ? req.query.resolation.toString() : 'default'
     new Promise(async (resolve) => {
-      // we have to wait this block for sending response, so use the Promise
+      // we have to wait this block for sending response, so use the Promise      
       if (
         typeof program.images === 'undefined' ||
         typeof program.images.get(resolation) === 'undefined' ||

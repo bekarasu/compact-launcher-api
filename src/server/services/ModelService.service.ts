@@ -54,6 +54,7 @@ class ModelService {
   update = async (id: string, updatedModel: UpdateQuery<any>): Promise<Query<any[], any, {}>> => {
     return await this.model.findByIdAndUpdate(id, updatedModel, {
       useFindAndModify: false,
+      new: true,
     })
   }
 
