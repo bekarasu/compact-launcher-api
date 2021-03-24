@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose'
 import { ILog } from '../../../@types/common/log'
-export interface LogModel extends ILog, mongoose.Document {
+export interface LogDocument extends ILog, mongoose.Document {
   _id: string
 }
 
@@ -38,13 +38,13 @@ const LogsSchema: mongoose.Schema = new mongoose.Schema(
   },
   { timestamps: true },
 )
-LogsSchema.pre<LogModel>('save', function (next) {
+LogsSchema.pre<LogDocument>('save', function (next) {
   this.createdAt = new Date()
   next()
 })
-LogsSchema.pre<LogModel>('updateOne', function (next) {
+LogsSchema.pre<LogDocument>('updateOne', function (next) {
   this.updatedAt = new Date()
   next()
 })
 // TODO add the deleted_at support generally
-export const Log = mongoose.model<LogModel>('Log', LogsSchema)
+export const Log = mongoose.model<LogDocument>('Log', LogsSchema)

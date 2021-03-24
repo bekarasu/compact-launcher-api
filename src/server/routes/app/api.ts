@@ -28,7 +28,7 @@ appApiRouter.use(express.json())
  * Routes
  */
 appApiRouter.get('/programs', ProgramController.list)
-appApiRouter.post('/programs/select', SelectProgramRequest.validate(), ProgramController.selectProgram)
+appApiRouter.post('/programs/select', SelectProgramRequest.validate, ProgramController.selectProgram)
 appApiRouter.get('/programs/:slug', ProgramController.show)
 
 /**

@@ -1,10 +1,11 @@
-import { CallbackError, Model, NativeError, Query, UpdateQuery } from 'mongoose'
-import HttpException from '../exceptions/api/HTTPException'
+import { CallbackError, Document, FilterQuery, Model, Query, Types, UpdateQuery } from 'mongoose'
+import HttpException from '../../exceptions/api/HTTPException'
+import { sysLog } from '../../helpers/logger'
 
-class ModelService {
-  model: Model<any, {}>
-  constructor(model: Model<any>) {
-    this.model = model
+export default abstract class AbstractRepository<T extends Document> {
+  protected _model: Model<T>
+  constructor(model: Model<T>) {
+    this._model = model
   }
 
   /**
@@ -14,9 +15,9 @@ class ModelService {
    * @param limit - data count limiting
    * @param offset - start point to taking data
    */
-  findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): Query<any[], any, {}> => {
+  findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): Query<T[], T, {}> => {
     where['deletedAt'] = { $eq: null }
-    let data = this.model.find(where, select, null, (error: Error) => {
+    let data = this._model.find(where, select, null, (error: Error) => {
       if (error) {
         throw new HttpException(500, error.message)
       }
@@ -31,12 +32,10 @@ class ModelService {
    * @param where
    * @param select
    */
-  find = (where?: any, select?: any): Query<any, any, {}> => {
+  find = async (where?: any, select?: any): Promise<Query<T | null, T>> => {
     where['deletedAt'] = { $eq: null }
-    const item = this.model.findOne(where, select, null, (error: CallbackError, doc: any) => {
-      if (error) {
-        throw new HttpException(500, error.message)
-      }
+    const item = this._model.findOne(where, select, null, (error: CallbackError, doc: any) => {
+      if (error) Promise.reject(error)
     })
     return item
   }
@@ -46,13 +45,19 @@ class ModelService {
    * @param newItem item that will insert to collection
    */
   insert = async (newItem: object): Promise<boolean> => {
-    let model = new this.model(newItem)
-    return await model.save().then((savedDoc: any) => {
+    let model = new this._model(newItem)
+    return model.save().then((savedDoc: any) => {
       return savedDoc === model
     })
   }
-  update = async (id: string, updatedModel: UpdateQuery<any>): Promise<Query<any[], any, {}>> => {
-    return await this.model.findByIdAndUpdate(id, updatedModel, {
+  insertDocument = async (newItem: T): Promise<boolean> => {
+    let model = new this._model(newItem)
+    return model.save().then((savedDoc: any) => {
+      return savedDoc === model
+    })
+  }
+  update = async (id: Types.ObjectId | string, updatedModel: UpdateQuery<T>): Promise<Query<any, any, {}>> => {
+    return this._model.findByIdAndUpdate(id, updatedModel, {
       useFindAndModify: false,
       new: true,
     })
@@ -63,20 +68,21 @@ class ModelService {
    * @param id - delete the document by id
    */
   delete = async (id: string): Promise<boolean> => {
-    let model = await this.model.find({ _id: id, deletedAt: { $exists: true } }).catch((err) => {
+    let model = await this._model.find({ _id: id, deletedAt: { $exists: true } } as FilterQuery<any>).catch((err) => {
+      // we use  "as FilterQuery<any>"" for fixing the bug in ts
       // check the deletedAt field for soft deleting
       if (err) throw new HttpException(500, err.message)
     })
     if (typeof model[0] === 'undefined') {
       // if model not found by deletedAt column, try to hard deleting by only id
-      await this.model.deleteOne({ _id: id }).catch((err) => {
+      await this._model.deleteOne({ _id: id } as FilterQuery<any>).catch((err) => {
         if (err) throw new HttpException(500, err.message)
       })
     } else {
       let updatedField = {
         deletedAt: Date.now(),
       }
-      await this.model.updateOne({ _id: id }, { $set: updatedField }).catch((err) => {
+      await this._model.updateOne({ _id: id } as FilterQuery<any>, { $set: updatedField } as UpdateQuery<{}>).catch((err) => {
         // soft delete if document has deletedAt column
         if (err) throw new HttpException(500, err.message)
       })
@@ -90,7 +96,7 @@ class ModelService {
    */
   forceDelete = async (id: string): Promise<boolean> => {
     // force the deleting model even it has deletedAt field
-    await this.model.findOneAndDelete({ _id: id }).catch((err) => {
+    await this._model.findOneAndDelete({ _id: id } as FilterQuery<any>).catch((err) => {
       if (err) throw new HttpException(500, err.message)
     })
     return true
@@ -98,7 +104,7 @@ class ModelService {
 
   count = async (where: object = {}): Promise<number> => {
     where['deletedAt'] = { $eq: null }
-    return this.model.countDocuments(where, function (err) {
+    return this._model.countDocuments(where, function (err) {
       if (err) throw new HttpException(500, err.message)
     })
   }
@@ -116,5 +122,3 @@ class ModelService {
     })
   }
 }
-
-export default ModelService

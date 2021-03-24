@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 // useful for sql actions
-export interface AdminUserModel extends Document {
+export interface AdminUserDocument extends Document {
   name: string;
   username: string;
   password: string;
@@ -28,7 +28,7 @@ const AdminUserSchema = new Schema({
   },
   avatar: String,
 });
-export const AdminUser = mongoose.model<AdminUserModel>(
+export const AdminUser = mongoose.model<AdminUserDocument>(
   "AdminUser",
   AdminUserSchema,
   "admin_users"

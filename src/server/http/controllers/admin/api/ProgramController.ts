@@ -1,23 +1,20 @@
-import { Request } from 'express'
+import { NextFunction, Request, Response } from 'express'
+
 import { body } from 'express-validator'
+import { IProgramImage } from '../../../../../../@types/common/program'
 import { IFormProperties, IGridProperties } from '../../../../../../@types/server/admin/resource'
 import { fileSystem } from '../../../../config/filesystem'
 import HttpException from '../../../../exceptions/api/HTTPException'
-import '../../../../libraries/ApiResponse'
-import ModelService from '../../../../services/ModelService.service'
-import ResourceController from './ResourceController'
-import { Program } from '../../../../models/program.model'
-import { IProgramImage } from '../../../../../../@types/common/program'
 import { toURLConverter } from '../../../../helpers/routeServer'
+import '../../../../libraries/ApiResponse'
+import { Program, ProgramDocument } from '../../../../models/program.model'
+import ProgramRepository from './../../../../database/repositories/ProgramRepository'
+import ResourceController from './ResourceController'
 
-class ProgramController extends ResourceController {
-  protected service: ModelService
+class ProgramController extends ResourceController<ProgramDocument> {
+  protected service = new ProgramRepository(Program)
   protected title = 'Programlar' // TODO localization support
   protected serviceURL = 'programs'
-  constructor() {
-    super()
-    this.service = new ModelService(Program)
-  }
   grid(): IGridProperties {
     return {
       fields: ['slug'],
@@ -50,7 +47,7 @@ class ProgramController extends ResourceController {
   show(): void {
     throw new Error('Method not implemented.')
   }
-
+  // TODO
   processImages(req: Request): Array<IProgramImage> {
     if (typeof req.files != 'undefined') {
       // image processing
@@ -59,7 +56,10 @@ class ProgramController extends ResourceController {
       fileValues.forEach((file: Express.Multer.File): void => {
         if (typeof images != 'undefined') {
           const programImage: IProgramImage = {
+            resolation: '',
             path: file.path.replace(fileSystem.uploadPath, fileSystem.assetUrl), // replace the path because of we use this url later, we don't have to keep upload path
+            chosenTime: 0,
+            isLocal: true,
           }
           images.push(programImage)
         }
@@ -93,6 +93,24 @@ class ProgramController extends ResourceController {
     rules.push(body('status').isBoolean().withMessage('Status must be true or false'))
     rules.push(body('content').isLength({ min: 10 }).withMessage('Content is too short'))
     return rules
+  }
+
+  /**
+   *
+   * @param req ExressJS Request object
+   * @param res ExressJS Response object
+   * @param next ExressJS Next function
+   */
+  update = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
+    let updatedProgram = {}
+    if (req.body['content'] != null) updatedProgram['content'] = req.body['content']
+    if (req.body['status'] != null) updatedProgram['status'] = req.body['status']
+    try {
+      await this.service.update(req.params.id, updatedProgram)
+    } catch (e) {
+      next(e)
+    }
+    return res.setMessage('Record Updated').setRedirect(`/${this.serviceURL}/list`)
   }
 }
 export default new ProgramController()

@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { IAdminMenu } from "../../../@types/common/admin_menu";
-interface AdminMenuModel extends IAdminMenu, mongoose.Document { }
+export interface AdminMenuDocument extends IAdminMenu, mongoose.Document { }
 
 const AdminMenuSchema: mongoose.Schema = new mongoose.Schema({
     ID: {
@@ -24,4 +24,4 @@ const AdminMenuSchema: mongoose.Schema = new mongoose.Schema({
         default: 0
     }
 });
-export const AdminMenu = mongoose.model<AdminMenuModel>("AdminMenu", AdminMenuSchema, 'admin_menu');
+export const AdminMenu = mongoose.model<AdminMenuDocument>("AdminMenu", AdminMenuSchema, 'admin_menu');

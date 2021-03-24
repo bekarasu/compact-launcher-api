@@ -1,9 +1,23 @@
 import * as mongoose from 'mongoose'
 import { IProgram } from '../../../@types/common/program'
-export interface ProgramModel extends IProgram, mongoose.Document {
-  _id: string
+import { IProgramImage } from './../../../@types/common/program.d'
+export interface ProgramImageDocument extends IProgramImage, mongoose.Document {
+  _id: mongoose.Types.ObjectId
 }
-const ProgramImageSchema = new mongoose.Schema({ path: String })
+
+export interface ProgramDocument extends IProgram, mongoose.Document {
+  _id: mongoose.Types.ObjectId
+  images: Array<ProgramImageDocument>
+}
+const ProgramImageSchema = new mongoose.Schema({
+  path: String,
+  resolation: String,
+  chosenTime: {
+    type: Number,
+    default: 0,
+  },
+  isLocal: Boolean,
+})
 
 const ProgramSchema: mongoose.Schema = new mongoose.Schema({
   slug: {
@@ -20,14 +34,11 @@ const ProgramSchema: mongoose.Schema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  images: {
-    type: Map,
-    of: [ProgramImageSchema],
-  },
+  images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProgramImage' }],
   deletedAt: {
     type: Date,
     default: null,
   },
 })
-// TODO add the deleted_at support generally
-export const Program = mongoose.model<ProgramModel>('Program', ProgramSchema)
+export const Program: mongoose.Model<ProgramDocument> = mongoose.model<ProgramDocument>('Program', ProgramSchema)
+export const ProgramImage: mongoose.Model<ProgramImageDocument> = mongoose.model<ProgramImageDocument>('ProgramImage', ProgramImageSchema)

@@ -1,8 +1,8 @@
 import { ILog } from '../../../@types/common/log'
 import { Log } from '../models/logs.model'
-import ModelService from '../services/ModelService.service'
+import LogRepository from './../database/repositories/LogRepository'
 
 export const sysLog = (log: ILog) => {
-  const logService = new ModelService(Log)
+  const logService = new LogRepository(Log)
   logService.insert(log)
 }

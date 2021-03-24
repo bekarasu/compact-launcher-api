@@ -47,6 +47,7 @@ interface IUpdatePageProps extends ICrudPageProps {
 
 interface IUpdatePageState extends ICrudPageState {
   items: Array<FieldItem>; // we will modify this object for setting initial input values. so pass items props to state
+  redirectURL: string | null // TODO add this to app-wide system
   fetching: boolean;
 }
 
