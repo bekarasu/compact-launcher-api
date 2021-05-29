@@ -11,28 +11,35 @@ export interface ProgramDocument extends IProgram, mongoose.Document {
 }
 const ProgramImageSchema = new mongoose.Schema({
   path: String,
-  resolation: String,
+  resolation: {
+    width: Number,
+    height: Number,
+  },
   chosenTime: {
     type: Number,
     default: 0,
   },
-  isLocal: Boolean,
+  isLocal: {
+    type: Boolean,
+    default: false,
+  },
+  isThumbnail: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const ProgramSchema: mongoose.Schema = new mongoose.Schema({
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true,
-  },
-  content: {
-    type: String,
-  },
+  name: String,
+  content: String,
   status: {
     type: Boolean,
     required: true,
     default: false,
+  },
+  lastFetchTime: {
+    type: Date,
+    default: null,
   },
   images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProgramImage' }],
   deletedAt: {

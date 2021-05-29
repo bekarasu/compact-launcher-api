@@ -43,14 +43,14 @@ class ProgramPage extends React.Component<RouteComponentProps<RouteParams> & IPr
         ) : (
           <>
             <Helmet>
-              <title>{this.props.program.slug}</title>
+              {/* <title>{this.props.program.slug}</title> */}
               <meta property="og:title" content="Programs" />
               {images.length > 0 ? <meta property="og:image" content={images[0].original} /> : null}
             </Helmet>
             <Row style={style}>
               <Col md="6">{images.length > 0 ? <>{/* TODO  */}</> : null}</Col>
               <Col md="6">
-                <p>{this.props.program.slug}</p>
+                {/* <p>{this.props.program.slug}</p> */}
               </Col>
             </Row>
             <Row className="content ck-content ck">

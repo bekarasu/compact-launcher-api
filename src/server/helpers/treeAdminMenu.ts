@@ -16,9 +16,6 @@ export function treeAdminMenu(list: Array<IAdminMenu>): Array<IAdminMenu> {
         }
         // Use our mapping to locate the parent element in our data array
         const parentEl = list[idMapping[el.parentID]];
-        console.log(el.parentID);
-        console.log(idMapping);
-        
         // Add our current el to its parent's `children` array
         parentEl.children = [...(parentEl.children || []), el];
     });

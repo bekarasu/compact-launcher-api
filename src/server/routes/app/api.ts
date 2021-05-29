@@ -3,6 +3,7 @@ import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
 import helmet from 'helmet'
+import PlaygroundController from '../../http/controllers/app/api/PlaygroundController'
 import ProgramController from '../../http/controllers/app/api/ProgramController'
 import { errorHandler } from '../../http/middlewares/api/error.middleware'
 import { notFoundHandler } from '../../http/middlewares/api/notFound.middleware'
@@ -27,6 +28,9 @@ appApiRouter.use(express.json())
 /**
  * Routes
  */
+appApiRouter.get('/playground', PlaygroundController.get)
+appApiRouter.post('/playground', PlaygroundController.post)
+
 appApiRouter.get('/programs', ProgramController.list)
 appApiRouter.post('/programs/select', SelectProgramRequest.validate, ProgramController.selectProgram)
 appApiRouter.get('/programs/:slug', ProgramController.show)

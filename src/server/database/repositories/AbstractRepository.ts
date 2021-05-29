@@ -1,6 +1,6 @@
 import { CallbackError, Document, FilterQuery, Model, Query, Types, UpdateQuery } from 'mongoose'
 import HttpException from '../../exceptions/api/HTTPException'
-import { sysLog } from '../../helpers/logger'
+import DBException from '../../exceptions/DBException'
 
 export default abstract class AbstractRepository<T extends Document> {
   protected _model: Model<T>
@@ -15,7 +15,7 @@ export default abstract class AbstractRepository<T extends Document> {
    * @param limit - data count limiting
    * @param offset - start point to taking data
    */
-  findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): Query<T[], T, {}> => {
+  findAll = (where: object = {}, select: object = {}, limit: number | null = null, offset: number | null = null): Query<T[], T> => {
     where['deletedAt'] = { $eq: null }
     let data = this._model.find(where, select, null, (error: Error) => {
       if (error) {
@@ -44,19 +44,16 @@ export default abstract class AbstractRepository<T extends Document> {
    * insert the item to collection
    * @param newItem item that will insert to collection
    */
-  insert = async (newItem: object): Promise<boolean> => {
-    let model = new this._model(newItem)
-    return model.save().then((savedDoc: any) => {
-      return savedDoc === model
-    })
+  insert = async (newItem: object): Promise<T> => {
+    const document = new this._model(newItem)
+    const savedDoc = await document.save()
+    if (document != savedDoc) {
+      throw new DBException("Document can't saved", [newItem])
+    }
+    return document
   }
-  insertDocument = async (newItem: T): Promise<boolean> => {
-    let model = new this._model(newItem)
-    return model.save().then((savedDoc: any) => {
-      return savedDoc === model
-    })
-  }
-  update = async (id: Types.ObjectId | string, updatedModel: UpdateQuery<T>): Promise<Query<any, any, {}>> => {
+
+  update = async (id: Types.ObjectId | string, updatedModel: UpdateQuery<T>): Promise<Query<any, any>> => {
     return this._model.findByIdAndUpdate(id, updatedModel, {
       useFindAndModify: false,
       new: true,

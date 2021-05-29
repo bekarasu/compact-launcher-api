@@ -56,7 +56,7 @@ class ProgramController extends ResourceController<ProgramDocument> {
       fileValues.forEach((file: Express.Multer.File): void => {
         if (typeof images != 'undefined') {
           const programImage: IProgramImage = {
-            resolation: '',
+            resolation: null,
             path: file.path.replace(fileSystem.uploadPath, fileSystem.assetUrl), // replace the path because of we use this url later, we don't have to keep upload path
             chosenTime: 0,
             isLocal: true,

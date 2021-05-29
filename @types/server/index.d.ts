@@ -1,3 +1,3 @@
 import "./filesystem";
-import "./request";
-import "./response";
+import "./extendedRequest";
+import "./extendedResponse";

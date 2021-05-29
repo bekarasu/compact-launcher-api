@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileSystem } from '../../config/filesystem'
 export default class ProgramImageRepository extends AbstractRepository<ProgramImageDocument> {
-  downloadFromSource = async (programImage: ProgramImageDocument): Promise<ProgramImageDocument> => {
+  transferToLocal = async (programImage: ProgramImageDocument): Promise<ProgramImageDocument> => {
     if (programImage.isLocal) {
       return programImage
     }
@@ -17,9 +17,11 @@ export default class ProgramImageRepository extends AbstractRepository<ProgramIm
     } catch (e) {
       return programImage
     }
+    // detect the file type
     let extension: string = axiosRes.headers['Content-Type'] ?? axiosRes.headers['content-type'] // TODO think about there, we need better detection
     const splittedExtension: string[] = extension.split('/')
     extension = splittedExtension[splittedExtension.length - 1]
+    
     let filePath = path.join(fileSystem.imagesPath, programImage._id.toHexString()) + `.${extension}`
     const writer = fs.createWriteStream(filePath)
     await axiosRes.data.pipe(writer)

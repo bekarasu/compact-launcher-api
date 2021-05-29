@@ -12,6 +12,7 @@ export const localeEN: Language = {
   },
   general: {
     notFound: ":item Not Found",
+    failed: 'An Error Occured'
   },
   resource: {
     management: ":item Management",

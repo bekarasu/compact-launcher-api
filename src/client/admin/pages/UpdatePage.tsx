@@ -56,7 +56,6 @@ class UpdatePage extends React.Component<IUpdatePageProps & RouteComponentProps<
     const requester = new ApiRequest()
     let fd = jsonToFormData(values)
     requester.put(this.state.resource + '/' + this.props.match.params.id, fd).then((res) => {
-      console.log(res.data.data.redirectUrl)
       if (res.status === 200) {
         store.dispatch(showServerResult('success', res.data.message));
         this.setState({ redirectURL: res.data.data.redirectUrl }) // redirect if the request is success
