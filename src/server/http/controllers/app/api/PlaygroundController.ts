@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import ImageFetcherFromServices from '../../../../services/externals/ImageRepoService/ImageFromServices'
-import WallpaperAccess from '../../../../services/externals/ImageRepoService/Repos/WallpaperAccess'
+import ImageFetcherFromServices from '../../../../services/ImageFetcher/ImageFromServices'
+import WallpaperAccess from '../../../../services/ImageFetcher/Repos/WallpaperAccess'
 
 class PlaygroundController {
   get = async (req: Request, res: Response, next: NextFunction) => {}

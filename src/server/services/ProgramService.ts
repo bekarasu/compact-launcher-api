@@ -10,8 +10,8 @@ import { toURLConverter } from '../helpers/routeServer'
 import { Program, ProgramDocument, ProgramImage, ProgramImageDocument } from '../models/program.model'
 import { SearchIndex, SearchIndexDocument } from '../models/search_index.model'
 import BaseService from './BaseService'
-import ImageFetcherFromServices from './externals/ImageRepoService/ImageFromServices'
-import WallpaperAccess from './externals/ImageRepoService/Repos/WallpaperAccess'
+import ImageFetcherFromServices from './ImageFetcher/ImageFromServices'
+import WallpaperAccess from './ImageFetcher/Repos/WallpaperAccess'
 
 export class ProgramService extends BaseService<ProgramDocument> implements IProgramService {
   protected repository: ProgramRepository = new ProgramRepository(Program)

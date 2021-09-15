@@ -1,9 +1,9 @@
 import { parse } from 'node-html-parser'
-import { IImage } from '../../../../../../@types/server/images'
-import { toURLConverter } from '../../../../helpers/routeServer'
-import { AbstractImageRepo } from '../AbstractImageRepo'
+import { IImage } from '../../../../../@types/server/images'
+import { toURLConverter } from '../../../helpers/routeServer'
+import { AbstractImageFetcher } from '../AbstractImageFetcher'
 
-export default class WallpaperAccess extends AbstractImageRepo {
+export default class WallpaperAccess extends AbstractImageFetcher {
   serviceURL = 'https://wallpaperaccess.com'
   imagesLength = 100 // image limit from service
   images = Array()

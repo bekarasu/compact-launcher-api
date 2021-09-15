@@ -1,10 +1,10 @@
-import { AbstractImageRepo } from './AbstractImageRepo'
-import { IImage } from '../../../../../@types/server/images'
+import { AbstractImageFetcher } from './AbstractImageFetcher'
+import { IImage } from '../../../../@types/server/images'
 
 export default class ImageFetcherFromServices {
-  services: Array<AbstractImageRepo>
+  services: Array<AbstractImageFetcher>
   images: Array<IImage>
-  constructor(imageServices: Array<AbstractImageRepo>) {
+  constructor(imageServices: Array<AbstractImageFetcher>) {
     this.services = imageServices
     this.images = []
   }
@@ -14,7 +14,7 @@ export default class ImageFetcherFromServices {
   fetchAllImages = async (slug: string) => {
     for (let service of this.services) {
       await service.fetchImages(slug)
-      for (let image of service.getImages()) {       
+      for (let image of service.getImages()) {
         this.images.push(image)
       }
     }

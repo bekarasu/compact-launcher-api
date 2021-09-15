@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { trans } from '../../../../../common/resources/lang/translate'
-import SearchIndexRepository from '../../../../database/repositories/SearchIndexRepository'
 import ServiceException from '../../../../exceptions/ServiceException'
 import '../../../../libraries/ApiResponse'
-import { SearchIndex } from '../../../../models/search_index.model'
 import { ProgramService } from '../../../../services/ProgramService'
 
 class ProgramController {
